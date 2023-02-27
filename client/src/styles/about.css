@@ -1,0 +1,60 @@
+.about-section{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    width: 97vw;
+    height: 100vh;
+}
+
+.about-heading{
+    text-transform: uppercase;
+    font-size: 79px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* margin-top: -23px; */
+    color: darkcyan;
+    padding: 22px;
+}
+.about-section p{
+    padding: 5px;
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    font-weight: 700;
+
+}
+
+.about-section a{
+    width: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    font-size: 33px;
+    border-radius: 100%;
+    transition: 0.2 ease-in;
+    /* background: #131417; */
+    padding: 5px;
+}
+
+.about-section a:hover{
+    background: #000;
+}
+
+.about-section div > img{
+    width: 30vw;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.about-section div h3{
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 49px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
