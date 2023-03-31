@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import burger from "../../assets/burger2.png";
 
 const Contact = () => {
+  const [data,  setData] = useState({
+    name:"",
+    email:"",
+    message:"",
+  })
+
+  const handlechange =(e)=>{
+    e.preventDefault();
+    const {name, value} = e.target;
+    setData({...data, [name]:value});
+  }
   return (
     <section className="contact">
       <motion.form
+        action='https://formspree.io/f/myyvnkjl'
+        method='POST'
         initial={{
           x: "-100vw",
           opacity: 0,
@@ -15,12 +28,13 @@ const Contact = () => {
           opacity: 1,
         }}
         transition={{ delay: 0.2 }}
+        
       >
         <h2>Contact Us</h2>
-        <input type="text" placeholder="Name" />
-        <input type="email" placeholder="Email" />
+        <input type="text" placeholder="Name" name="name" value={data.name} onChange={handlechange} required/>
+        <input type="email" placeholder="Email" name="email" value={data.email} onChange={handlechange} autoComplete="off" required/>
 
-        <textarea placeholder="Message..." cols="30" rows="10"></textarea>
+        <textarea placeholder="Message..." cols="30" rows="10" name="message" value={data.message} onChange={handlechange}></textarea>
 
         <button type="submit">Send</button>
       </motion.form>

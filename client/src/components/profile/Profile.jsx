@@ -1,10 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
-import me from "../../assets/founder.webp";
+// import me from "../../assets/user.png";
 import { Link } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/actions/user";
 
-const Profile = () => {
+const Profile = (props) => {
   const options = {
     initial: {
       y: "-100%",
@@ -15,24 +17,35 @@ const Profile = () => {
       opacity: 1,
     },
   };
+
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(logout());
+  };
+
   return (
     <section className="profile">
       <main>
-        <motion.img src={me} alt="User" {...options} />
+        <motion.img src={props.user.photo} alt="User" {...options} />
         <motion.h5 {...options} transition={{ delay: 0.3 }}>
-          Abhishek
+          {props.user.name}
         </motion.h5>
-        <motion.div {...options} transition={{ delay: 0.5 }}>
-          <Link
-            to="/admin/dashboard"
-            style={{
-              borderRadius: 0,
-              backgroundColor: "rgb(40,40,40)",
-            }}
-          >
-            <MdDashboard /> Dashboard
-          </Link>
-        </motion.div>
+
+        {props.user.role === "admin" && (
+          <motion.div {...options} transition={{ delay: 0.5 }}>
+            <Link
+              to="/admin/dashboard"
+              style={{
+                borderRadius: 0,
+                backgroundColor: "rgb(40,40,40)",
+              }}
+            >
+              <MdDashboard /> Dashboard
+            </Link>
+          </motion.div>
+        )}
+
         <motion.div
           initial={{
             x: "-100vw",
@@ -58,6 +71,7 @@ const Profile = () => {
           transition={{
             delay: 0.3,
           }}
+          onClick={handleClick}
         >
           Logout
         </motion.button>

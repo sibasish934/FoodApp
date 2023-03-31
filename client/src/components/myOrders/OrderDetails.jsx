@@ -1,26 +1,41 @@
-import React from "react";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import { getOrdersDetails } from "../../redux/actions/order";
+import {useParams} from "react-router-dom";
+import Loader from "../layout/Loader";
+
 
 const OrderDetails = () => {
+   
+  const {order, loading } = useSelector(state => state.orders);
+   const dispatch = useDispatch();
+  const params = useParams();
+  useEffect(() => {
+     dispatch(getOrdersDetails(params.id))
+  }, [dispatch, params.id])
+  
+
   return (
     <section className="orderDetails">
-      <main>
+      {loading === false ? (
+        <main>
         <h1>Order Details</h1>
         <div>
           <h1>Shipping</h1>
           <p>
             <b>Address</b>
-            {"sjda 12-32ss dsad"}
+            {`${order.shippingInfo.hno} ${order.shippingInfo.city} ${order.shippingInfo.state} ${order.shippingInfo.Country} ${order.shippingInfo.pinCode}`}
           </p>
         </div>
         <div>
           <h1>Contact</h1>
           <p>
             <b>Name</b>
-            {"Abhishek"}
+            {`${order.user.name}`}
           </p>
           <p>
             <b>Phone</b>
-            {2131232123}
+            {`${order.shippingInfo.phoneNo}`}
           </p>
         </div>
 
@@ -28,15 +43,15 @@ const OrderDetails = () => {
           <h1>Status</h1>
           <p>
             <b>Order Status</b>
-            {"Processing"}
+            {`${order.orderStatus}`}
           </p>
           <p>
             <b>Placed At</b>
-            {"23-02-2002"}
+            {order.createdAt.split("T")[0]}
           </p>
           <p>
             <b>Delivered At</b>
-            {"23-02-2003"}
+            {order.deliveredAt ? order.deliveredAt.split("T")[0]:"NA"}
           </p>
         </div>
 
@@ -44,30 +59,30 @@ const OrderDetails = () => {
           <h1>Payment</h1>
           <p>
             <b>Payment Method</b>
-            {"Online"}
+            {`${order.paymentMethod}`}
           </p>
           <p>
-            <b>Payment Reference</b>#{"asdasdsadsad"}
+            <b>Payment Reference</b>{order.paymentMethod === "Online" ? `${order.paymentInfo}`:"NA"}
           </p>
           <p>
             <b>Paid At</b>
-            {"23-02-2003"}
+            {order.paymentMethod === "Online" ? `${order.paidAt.split("T")[0]}`:"NA"}
           </p>
         </div>
 
         <div>
           <h1>Amount</h1>
           <p>
-            <b>Items Total</b>₹{2132}
+            <b>Items Total</b>₹{`${order.itemsPrice}`}
           </p>
           <p>
-            <b>Shipping Charges</b>₹{200}
+            <b>Shipping Charges</b>₹{`${order.shippingCharges}`}
           </p>
           <p>
-            <b>Tax</b>₹{232}
+            <b>Tax</b>₹{`${order.taxPrice}`}
           </p>
           <p>
-            <b>Total Amount</b>₹{232 + 200 + 2132}
+            <b>Total Amount</b>₹{`${order.totalAmount}`}
           </p>
         </div>
 
@@ -76,19 +91,19 @@ const OrderDetails = () => {
           <div>
             <h4>Cheese Burger</h4>
             <div>
-              <span>{12}</span> x <span>{232}</span>
+              <span>{order.orderItems.cheeseBurger.quantity}</span> x <span>{order.orderItems.cheeseBurger.price}</span>
             </div>
           </div>
           <div>
             <h4>Veg Cheese Burger</h4>
             <div>
-              <span>{10}</span> x <span>{500}</span>
+              <span>{order.orderItems.VegCheeseBurger.quantity}</span> x <span>{order.orderItems.VegCheeseBurger.price}</span>
             </div>
           </div>
           <div>
             <h4>Burger Fries</h4>
             <div>
-              <span>{10}</span> x <span>{1800}</span>
+              <span>{order.orderItems.BurgerWithFries.quantity}</span> x <span>{order.orderItems.BurgerWithFries.price}</span>
             </div>
           </div>
 
@@ -105,11 +120,12 @@ const OrderDetails = () => {
                 fontWeight: 800,
               }}
             >
-              ₹{2132}
+              ₹{`${order.itemsPrice}`}
             </div>
           </div>
         </article>
       </main>
+      ):(<Loader />)}
     </section>
   );
 };

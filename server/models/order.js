@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const schema = new mongoose.Schema({
   shippingInfo: {
-    hNo: {
+    hno: {
       type: String,
       required: true,
     },
@@ -14,7 +14,7 @@ const schema = new mongoose.Schema({
       required: true,
     },
 
-    country: {
+    Country: {
       type: String,
       required: true,
     },
@@ -40,7 +40,7 @@ const schema = new mongoose.Schema({
       },
     },
 
-    vegCheeseBurger: {
+    VegCheeseBurger: {
       price: {
         type: Number,
         required: true,
@@ -51,7 +51,7 @@ const schema = new mongoose.Schema({
       },
     },
 
-    burgerWithFries: {
+    BurgerWithFries: {
       price: {
         type: Number,
         required: true,

@@ -10,19 +10,15 @@ export const myprofile = (req, res, next)=>{
 };
 
 export const logout = (req, res, next)=>{
-    req.session.destroy((err)=>{
-        if(err){
-            return next(err);
-        }
-        res.clearCookie("connect.sid", {
-            secure:process.env.NODE_ENV === "development" ? false:true,
-            httpOnly:process.env.NODE_ENV === "development" ? false:true,
-            sameSite:process.env.NODE_ENV === "development" ? false : "none",
-        });
+    req.session.destroy((err) =>{
+        if(err) return next(err);
+
+        res.clearCookie("connect.sid");
         res.status(200).json({
-            message:"logged out",
-        })
-    })
+            message:"Logged Out",
+        });
+    });
+
 }
 
 export const getAllUsers = catchAsyncError(async(req, res, next)=>{
